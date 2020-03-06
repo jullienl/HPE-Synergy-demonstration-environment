@@ -1,70 +1,76 @@
+#IP address of OneView
+$IP = "192.168.56.101" 
+
+# OneView Credentials
+$username = "Administrator" 
+$password = "password"
+
+$secpasswd = ConvertTo-SecureString $password -AsPlainText -Force
+$credentials = New-Object System.Management.Automation.PSCredential ($username, $secpasswd)
+     
+Connect-HPOVMgmt -appliance $IP -Credential $credentials
+
 # -------------- Attributes for ServerProfile "Profile-1"
-$name                       = "Profile-1"
-$server                     = Get-HPOVServer -Name "Synergy-Encl-1, bay 11"
+$name                       = "Profile-2"
+$description                = "Server Profile for HPE Synergy 480 Gen9 Compute Module with Local Boot for RHEL"
+$server                     = Get-HPOVServer -Name "Synergy-Encl-2, bay 7"
 $affinity                   = "Bay"
 # -------------- Attributes for connection "1"
 $connID                     = 1
-$connType                   = "Ethernet"
-$netName                    = "ESX Mgmt"
-$ThisNetwork                = Get-HPOVNetwork -Type Ethernet -Name $netName
-$portID                     = "Mezz 3:1-a"
-$requestedMbps              = 2500
-$Conn1                      = New-HPOVServerProfileConnection -ConnectionID $connID -ConnectionType $connType -Network $ThisNetwork -PortId $portID -RequestedBW $requestedMbps
-# -------------- Attributes for connection "2"
-$connID                     = 2
-$connType                   = "Ethernet"
-$netName                    = "ESX Mgmt"
-$ThisNetwork                = Get-HPOVNetwork -Type Ethernet -Name $netName
-$portID                     = "Mezz 3:2-a"
-$requestedMbps              = 2500
-$Conn2                      = New-HPOVServerProfileConnection -ConnectionID $connID -ConnectionType $connType -Network $ThisNetwork -PortId $portID -RequestedBW $requestedMbps
-# -------------- Attributes for connection "3"
-$connID                     = 3
+$connName                   = "Prod-NetworkSet-1"
 $connType                   = "Ethernet"
 $netName                    = "Prod"
 $ThisNetwork                = Get-HPOVNetworkSet -Name $netName
 $portID                     = "Mezz 3:1-c"
-$requestedMbps              = 2500
-$Conn3                      = New-HPOVServerProfileConnection -ConnectionID $connID -ConnectionType $connType -Network $ThisNetwork -PortId $portID -RequestedBW $requestedMbps
-# -------------- Attributes for connection "4"
-$connID                     = 4
+$requestedMbps              = 7500
+$Conn1                      = New-HPOVServerProfileConnection -ConnectionID $connID -Name $connName -ConnectionType $connType -Network $ThisNetwork -PortId $portID -RequestedBW $requestedMbps
+# -------------- Attributes for connection "2"
+$connID                     = 2
+$connName                   = "Prod-NetworkSet-2"
 $connType                   = "Ethernet"
 $netName                    = "Prod"
 $ThisNetwork                = Get-HPOVNetworkSet -Name $netName
 $portID                     = "Mezz 3:2-c"
+$requestedMbps              = 7500
+$Conn2                      = New-HPOVServerProfileConnection -ConnectionID $connID -Name $connName -ConnectionType $connType -Network $ThisNetwork -PortId $portID -RequestedBW $requestedMbps
+# -------------- Attributes for connection "3"
+$connID                     = 3
+$connName                   = "Deployment Network A"
+$connType                   = "Ethernet"
+$netName                    = "Deployment"
+$ThisNetwork                = Get-HPOVNetwork -Type Ethernet -Name $netName
+$portID                     = "Mezz 3:1-a"
 $requestedMbps              = 2500
-$Conn4                      = New-HPOVServerProfileConnection -ConnectionID $connID -ConnectionType $connType -Network $ThisNetwork -PortId $portID -RequestedBW $requestedMbps
+$Conn3                      = New-HPOVServerProfileConnection -ConnectionID $connID -Name $connName -ConnectionType $connType -Network $ThisNetwork -PortId $portID -RequestedBW $requestedMbps
+# -------------- Attributes for connection "4"
+$connID                     = 4
+$connName                   = "Deployment Network B"
+$connType                   = "Ethernet"
+$netName                    = "Deployment"
+$ThisNetwork                = Get-HPOVNetwork -Type Ethernet -Name $netName
+$portID                     = "Mezz 3:2-a"
+$requestedMbps              = 2500
+$Conn4                      = New-HPOVServerProfileConnection -ConnectionID $connID -Name $connName -ConnectionType $connType -Network $ThisNetwork -PortId $portID -RequestedBW $requestedMbps
 $connections                = $Conn1, $Conn2, $Conn3, $Conn4
-# -------------- Attributes for logical disk "OS_RAID(RAID1)"
-$ldName                     = "OS_RAID"
+# -------------- Attributes for logical disk "SAS RAID1 SSD(RAID1)"
+$ldName                     = "SAS RAID1 SSD"
 $raidLevel                  = "RAID1"
 $numPhysDrives              = 2
-$driveTech                  = "Auto"
+$driveTech                  = "SASSSD"
 $LogicalDisk1               = New-HPOVServerProfileLogicalDisk -Name $ldName -Raid $raidLevel -NumberofDrives $numPhysDrives -DriveType $driveTech -Bootable $True
-# -------------- Attributes for controller "Embedded" (Mixed)
+# -------------- Attributes for controller "Embedded" (RAID)
 $deviceSlot                 = "Embedded"
-$controllerMode             = "Mixed"
+$controllerMode             = "RAID"
 $LogicalDisks               = $LogicalDisk1
 $controller1                = New-HPOVServerProfileLogicalDiskController -ControllerID $deviceSlot -Mode $controllerMode -LogicalDisk $LogicalDisks
 $controllers                = $controller1
 # -------------- Attributes for BIOS Boot Mode settings
 $manageboot                 = $True
-$biosBootMode               = "UEFIOptimized"
+$biosBootMode               = "BIOS"
 # -------------- Attributes for BIOS order settings
-$bootOrder                  = "HardDisk"
-# -------------- Attributes for BIOS settings
-$biosSettings               = @(
-        @{id = 'WorkloadProfile'; value = 'Virtualization-MaxPerformance'},
-        @{id = 'PowerRegulator'; value = 'StaticHighPerf'},
-        @{id = 'MinProcIdlePower'; value = 'NoCStates'},
-        @{id = 'MinProcIdlePkgState'; value = 'NoState'},
-        @{id = 'EnergyPerfBias'; value = 'MaxPerf'},
-        @{id = 'CollabPowerControl'; value = 'Disabled'},
-        @{id = 'NumaGroupSizeOpt'; value = 'Clustered'},
-        @{id = 'UncoreFreqScaling'; value = 'Maximum'},
-        @{id = 'SubNumaClustering'; value = 'Enabled'},
-        @{id = 'EnergyEfficientTurbo'; value = 'Disabled'},
-        @{id = 'IntelUpiPowerManagement'; value = 'Disabled'}
-)
+$bootOrder                  = "CD", "USB", "HardDisk", "PXE"
 # -------------- Attributes for advanced settings
-New-HPOVServerProfile -Name $name -AssignmentType Server -Server $server -Affinity $affinity -Connections $connections -LocalStorage -StorageController $controllers -ManageBoot:$manageboot -BootMode $biosBootMode -BootOrder $bootOrder -Bios -BiosSettings $biosSettings -HideUnusedFlexNics $true
+New-HPOVServerProfile -Name $name -Description $description -AssignmentType Server -Server $server -Affinity $affinity -Connections $connections -LocalStorage -StorageController $controllers -ManageBoot:$manageboot -BootMode $biosBootMode -BootOrder $bootOrder -HideUnusedFlexNics $true
+
+
+Disconnect-HPOVMgmt 
