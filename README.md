@@ -15,8 +15,6 @@ Live demonstration scenarios include:
 - PowerShell/Python scripts to demonstrate many aspects of the Software Defined Infrastructure, Infra as Code, etc.
 - DevOps with Ansible to show how simple automation can be implemented at the Hardware Infrastructure level. 
 
-All live demonstration scripts used in this document can be found on https://github.com/jullienl/HPE-Synergy-demonstration-environment 
-
 For more information about HPE Synergy, please visit the HPE website. You can access to the HPE Synergy user guides and manuals at www.hpe.com/info/synergy-docs 
 
 
