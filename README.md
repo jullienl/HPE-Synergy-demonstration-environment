@@ -36,8 +36,8 @@ The HPE OneView demonstration appliance is recommended to be deployed on a dual-
 Important notice: If your laptop does not meet these requirements, you will not be able to run the appliance.
 
 
-The HPE OneView demonstration appliance is deployed from an OVA file that contains the OneView instance, a datacenter simulator with some simulated resources and the parameters of the virtual machine (4 vCPUs - 12GB of memory).
+The HPE OneView demonstration appliance is intended for demonstration purposes only and is only available to HPE employees and HPE Partners.
 
 
-
-
+ 
+[Technical white paper](https://github.com/jullienl/HPE-Synergy-demonstration-environment/blob/master/Building%20an%20HPE%20Synergy%20demonstration%20environment%20on%20your%20own%20laptop.pdf)
