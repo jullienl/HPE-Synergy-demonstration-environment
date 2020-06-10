@@ -4,7 +4,7 @@ $IP = "192.168.56.101"
 $username = "Administrator" 
 $password = "password"
 
-$LIG_UplinkSet = "US-Prod"
+$LIG_UplinkSet = "Prod"
 $networksetname = "Prod"
 $LIGname = "LIG-FlexFabric"
 
