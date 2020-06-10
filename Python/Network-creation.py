@@ -51,7 +51,7 @@ ethernet_network_name = options_ethernet['name']
 
 #print("Enet uri = '%s' " % (ethernet_network_name))
 
-uplink_set = uplink_sets.get_by_name("US-Prod")
+uplink_set = uplink_sets.get_by_name("Prod")
 
 #print("\nAdd ethernet network to the uplink set")
 

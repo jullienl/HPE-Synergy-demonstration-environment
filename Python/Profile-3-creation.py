@@ -19,7 +19,7 @@ server_profile_templates = oneview_client.server_profile_templates
 myspt = server_profile_templates.get_by_name(
     'HPE Synergy 480 Gen9 with Local Boot for RHEL Template')
 
-server = server_hardwares.get_by_name('Synergy-Encl-3, bay 7')
+server = server_hardwares.get_by_name('Synergy-Encl-3, bay 5')
 
 profile = myspt.get_new_profile()
 
