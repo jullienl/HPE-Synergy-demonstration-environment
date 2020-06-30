@@ -20,8 +20,7 @@
       loop: "{{server_hardwares}}"
       loop_control:
         label: "{{ item.model }}"
-      
-
+        
     - name: Gather paginated, sorted and filtered facts about Ethernet Networks
       oneview_ethernet_network_facts:
         config: "{{ config }}"
@@ -30,4 +29,3 @@
           filter: "purpose=General"
 
     - debug: msg="{{ ethernet_networks  | map(attribute='name') | list }}"
-
