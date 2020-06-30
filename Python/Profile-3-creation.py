@@ -3,7 +3,7 @@ from pprint import pprint
 
 config = {
     "ip": "192.168.56.101",
-    "api_version": 1200,
+    "api_version": 1600,
     "credentials": {
         "userName": "Administrator",
         "password": "password"
