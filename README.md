@@ -40,4 +40,4 @@ The HPE OneView demonstration appliance is intended for demonstration purposes o
 
 
  
-[Technical white paper](https://github.com/jullienl/HPE-Synergy-demonstration-environment/blob/5.20/DRAFT-Building%20an%20HPE%20Synergy%20demonstration%20environment%20on%20your%20own%20laptop.pdf)
+[DRAFT - Technical white paper](https://github.com/jullienl/HPE-Synergy-demonstration-environment/blob/5.20/DRAFT-Building%20an%20HPE%20Synergy%20demonstration%20environment%20on%20your%20own%20laptop.pdf)
