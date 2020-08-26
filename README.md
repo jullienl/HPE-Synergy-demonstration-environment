@@ -13,7 +13,7 @@ This document provides all the step-by-step process for creating a simple demons
 Live demonstration scenarios include:
 - Postman to introduce the OneView REST API, the resource model, OneView object content, etc.
 - PowerShell/Python scripts to demonstrate many aspects of the Software Defined Infrastructure, Infra as Code, etc.
-- DevOps with Ansible to show how simple automation can be implemented at the Hardware Infrastructure level. 
+- DevOps with Ansible and Terrafom to show how simple automation can be implemented at the Hardware Infrastructure level. 
 
 For more information about HPE Synergy, please visit the HPE website. You can access to the HPE Synergy user guides and manuals at www.hpe.com/info/synergy-docs 
 
