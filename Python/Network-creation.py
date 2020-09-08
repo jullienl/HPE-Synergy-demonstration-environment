@@ -8,7 +8,7 @@ networkset_name = "Prod"
 
 config = {
     "ip": "192.168.56.101",
-    "api_version": 1600,
+    "api_version": 1800,
     "credentials": {
         "userName": "Administrator",
         "password": "password"
@@ -34,25 +34,27 @@ options_ethernet = {
 
 ethernet_network = ethernet_networks.create(options_ethernet)
 
-print("Created ethernet-networks '%s' successfully.\n  uri = '%s' " 
-  % ( ethernet_network.data['name'] , ethernet_network.data['uri'] ) )
+print("Created ethernet-networks '%s' successfully.\n  uri = '%s' "
+      % (ethernet_network.data['name'], ethernet_network.data['uri']))
 
 # Get RHEL Prod network URI & name
 
 ethernet_network_uri = ethernet_network.data['uri']
 ethernet_network_name = options_ethernet['name']
 
-logical_interconnect_groups  = oneview_client.logical_interconnect_groups
+logical_interconnect_groups = oneview_client.logical_interconnect_groups
 
 # Get logical interconnect group by name
 lig = logical_interconnect_groups.get_by_name(lig_name)
 lig_response = lig.data
 
-#help(oneview_client.logical_interconnect_groups)
+# help(oneview_client.logical_interconnect_groups)
+
 
 for uplink in lig_response['uplinkSets']:
-    if uplink['name'] == uplinkset_name :
-        new_uplinkset_Prod_networkuris = uplink['networkUris'] + [ethernet_network_uri]
+    if uplink['name'] == uplinkset_name:
+        new_uplinkset_Prod_networkuris = uplink['networkUris'] + [
+            ethernet_network_uri]
         # pprint(uplink['networkUris'])
         # pprint(new_uplinkset_Prod_networkuris)
         uplink['networkUris'] = new_uplinkset_Prod_networkuris
@@ -64,17 +66,20 @@ lig_to_update = lig_response.copy()
 # Update a logical interconnect group
 print("Updating logical interconnect group '%s' " % (lig_name))
 lig.update(lig_to_update)
-print("Number of networks configured in the uplink set '%s' is now %s " % ( uplinkset_name , str(len(new_uplinkset_Prod_networkuris))   ))
+print("Number of networks configured in the uplink set '%s' is now %s " %
+      (uplinkset_name, str(len(new_uplinkset_Prod_networkuris))))
 
 # Updating the LI from the LIG
 logical_interconnect_name = "LE-Synergy-Local-LIG-FlexFabric"
 logical_interconnects = oneview_client.logical_interconnects
-logical_interconnect = logical_interconnects.get_by_name(logical_interconnect_name)
+logical_interconnect = logical_interconnects.get_by_name(
+    logical_interconnect_name)
 
 # Return the logical interconnect to a consistent state
 print("Return the logical interconnect to a consistent state")
 logical_interconnect_updated = logical_interconnect.update_compliance()
-print("  Done. The current consistency state is {consistencyStatus}.".format(**logical_interconnect_updated))
+print("  Done. The current consistency state is {consistencyStatus}.".format(
+    **logical_interconnect_updated))
 
 
 # Adding new network to Network Set

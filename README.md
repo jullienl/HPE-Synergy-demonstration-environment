@@ -24,7 +24,7 @@ For more information about HPE Synergy, please visit the HPE website. You can ac
 
 -	CentOS 7.5 Boot ISO
 
--	OneView DCS 5.20 OVA File(s) for Synergy or for BL/DL, the process below is the same for both.
+-	OneView DCS 5.30 OVA File(s) for Synergy or for BL/DL, the process below is the same for both.
 
 -	An update version of Windows 10 (preferably April 2018 update, version 1803) to run the latest version of Windows Subsystem for Linux
 

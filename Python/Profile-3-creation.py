@@ -3,7 +3,7 @@ from pprint import pprint
 
 config = {
     "ip": "192.168.56.101",
-    "api_version": 1600,
+    "api_version": 1800,
     "credentials": {
         "userName": "Administrator",
         "password": "password"
@@ -12,13 +12,12 @@ config = {
 
 oneview_client = OneViewClient(config)
 
-oneview_client.server_hardware
-
 server_hardwares = oneview_client.server_hardware
 
 server_profile_templates = oneview_client.server_profile_templates
 
-myspt = server_profile_templates.get_by_name('HPE Synergy 480 Gen9 with Local Boot for RHEL Template')
+myspt = server_profile_templates.get_by_name(
+    'HPE Synergy 480 Gen9 with Local Boot for RHEL Template')
 
 server = server_hardwares.get_by_name('Synergy-Encl-3, bay 5')
 

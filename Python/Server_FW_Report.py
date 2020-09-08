@@ -4,7 +4,7 @@ import csv
 
 config = {
     "ip": "192.168.56.101",
-    "api_version": 1600,
+    "api_version": 1800,
     "credentials": {
         "userName": "Administrator",
         "password": "password"
@@ -13,11 +13,12 @@ config = {
 
 oneview_client = OneViewClient(config)
 server_hardwares = oneview_client.server_hardware
-server_hardware_gen9 = server_hardwares.get_by("shortModel", "SY 480 Gen9")
+#server_hardware = server_hardwares.get_by("shortModel", "SY 480 Gen9")
+server_hardware = server_hardwares.get_all()
 
 FW_Report = [["Server Name", "Rom Version", "Model", "iLO Address"]]
 
-for serv in server_hardware_gen9:
+for serv in server_hardware:
     servername = serv['name']
     RomVersion = serv['romVersion']
     Model = serv['model']

@@ -1,52 +1,5 @@
 ---
-- name: Making sure the Server Hardware tied to the Server Profile Template are turned off
-  hosts: localhost
-  gather_facts: no
-  vars:
-    - config: "{{ playbook_dir }}/oneview_config.json"
-    - server_template: "HPE Synergy 660 Gen9 with Local Boot and SAN Storage for Windows Template"
-
-  tasks:
-    - name: Gather facts about a Server Profile Template by name
-      oneview_server_profile_template_facts:
-        config: "{{ config }}"
-        name: "{{ server_template }}"
-      delegate_to: localhost
-    
-    # - debug:  var=server_profile_templates
-
-    - name: Get the Server Hardware Type Uri used by the template
-      set_fact: 
-        serverHardwareTypeUri: "{{ server_profile_templates.0.serverHardwareTypeUri }}"
-
-    # - debug:  var=serverHardwareTypeUri
-
-    - name: Get the Server Hardware using the SHT of the server profile template
-      oneview_server_hardware_facts:
-        config: "{{ config }}"
-      delegate_to: localhost
-
-    # - debug:
-    #     msg: "{{ server_hardwares  | selectattr('serverHardwareTypeUri', 'equalto', serverHardwareTypeUri ) | list | map(attribute='name') | list }}"
-    
-    - set_fact: 
-        server_hardware_names : "{{ server_hardwares  | selectattr('serverHardwareTypeUri', 'equalto', serverHardwareTypeUri ) | list | map(attribute='name') | list }}"
-
-    # - debug: var=server_hardware_names
-
-    - name: Making sure the Compute Module(s) using the SHT are turned off
-      with_items: "{{ server_hardware_names }}"
-      oneview_server_hardware:
-        config: "{{ config }}"
-        state: power_state_set
-        data:
-            name : "{{ item }}"
-            powerStateData:
-                powerState: "Off"
-                powerControl: "MomentaryPress"
-      delegate_to: localhost
-
-- name: Deploying Compute Module(s) defined in the Ansible hosts file using a Server Profile Template in OneView 
+- name: Ansible OneView Synergy playbook to deploy Compute Module(s) using a Server Profile Template
   hosts: RHEL
   gather_facts: no
   vars:
@@ -54,23 +7,23 @@
     - server_template: "HPE Synergy 660 Gen9 with Local Boot and SAN Storage for Windows Template"
 
   tasks:
-  - name: Creating Server Profile [{{ inventory_hostname }}] from Server Profile Template [{{ server_template }}]
-    oneview_server_profile:
+    - name: Creating Server Profile [{{ inventory_hostname }}] from Server Profile Template [{{ server_template }}]
+      oneview_server_profile:
         config: "{{ config }}"
         data:
           serverProfileTemplateName: "{{ server_template }}"
           name: "{{ inventory_hostname }}"
-    delegate_to: localhost
-    register: result
+      delegate_to: localhost
+      register: result
 
     #- debug: var=server_hardware 
     
-  - name: Task result of the Server Profile(s) creation
-    debug: 
+    - name: Task result of the Server Profile(s) creation
+      debug: 
         msg: "{{ result.msg }}"
 
-  - name: Powering on the Compute Module(s) [{{ server_hardware.name }}]
-    oneview_server_hardware:
+    - name: Powering on the Compute Module(s) [{{ server_hardware.name }}]
+      oneview_server_hardware:
         config: "{{ config }}"
         state: power_state_set
         data:
@@ -78,7 +31,7 @@
             powerStateData:
                 powerState: "On"
                 powerControl: "MomentaryPress"
-    delegate_to: localhost
+      delegate_to: localhost
 
-  - debug: 
+    - debug: 
         msg: "The server is located in {{ server_hardware.name }}"

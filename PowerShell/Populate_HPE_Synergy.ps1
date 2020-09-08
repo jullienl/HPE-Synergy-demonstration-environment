@@ -132,8 +132,8 @@ function Add_Storage {
     Write-Output "Adding 3PAR Storage Volume Templates" | Timestamp
     Get-OVStoragePool CPG-SSD -StorageSystem ThreePAR-1 | New-OVStorageVolumeTemplate -Capacity 100 -Name SVT-3PAR-Shared-1 -ProvisionType Thin -Shared
     Get-OVStoragePool CPG-SSD -StorageSystem ThreePAR-2 | New-OVStorageVolumeTemplate -Capacity 100 -Name SVT-3PAR-Shared-2 -ProvisionType Thin -Shared
-    Get-OVStoragePool CPG-SSD -StorageSystem ThreePAR-1 | New-OVStorageVolumeTemplate -Capacity 100 -Name SVT-Demo-Shared-TPDD-1 -ProvisionType Thin -EnableDeduplication $true -EnableCompression $true -Shared
-    Get-OVStoragePool CPG-SSD -StorageSystem ThreePAR-2 | New-OVStorageVolumeTemplate -Capacity 100 -Name SVT-Demo-Shared-TPDD-2 -ProvisionType Thin -EnableDeduplication $true -EnableCompression $true -Shared
+    Get-OVStoragePool CPG-SSD -StorageSystem ThreePAR-1 | New-OVStorageVolumeTemplate -Capacity 100 -Name SVT-Demo-Shared-TPDD-1 -ProvisionType Thin -EnableDeduplication $true -Shared #-EnableCompression $true
+    Get-OVStoragePool CPG-SSD -StorageSystem ThreePAR-2 | New-OVStorageVolumeTemplate -Capacity 100 -Name SVT-Demo-Shared-TPDD-2 -ProvisionType Thin -EnableDeduplication $true -Shared #-EnableCompression $true
 
     Write-Output "Adding 3PAR Storage Volumes" | Timestamp
     Get-OVStoragePool FST_CPG1 -StorageSystem ThreePAR-1 | New-OVStorageVolume -Capacity 200 -Name Demo-Volume-1 | Wait-OVTaskComplete
@@ -168,11 +168,11 @@ function Rename_Enclosures {
     $Enc = Get-OVEnclosure -Name 0000A66103 -ErrorAction SilentlyContinue
     Set-OVEnclosure -Name Synergy-Encl-3 -Enclosure $Enc | Wait-OVTaskComplete
 
-    $Enc = Get-OVEnclosure -Name 0000A66104 -ErrorAction SilentlyContinue
-    Set-OVEnclosure -Name Synergy-Encl-4 -Enclosure $Enc | Wait-OVTaskComplete
+    # $Enc = Get-OVEnclosure -Name 0000A66104 -ErrorAction SilentlyContinue
+    # Set-OVEnclosure -Name Synergy-Encl-4 -Enclosure $Enc | Wait-OVTaskComplete
 
-    $Enc = Get-OVEnclosure -Name 0000A66105 -ErrorAction SilentlyContinue
-    Set-OVEnclosure -Name Synergy-Encl-5 -Enclosure $Enc | Wait-OVTaskComplete
+    # $Enc = Get-OVEnclosure -Name 0000A66105 -ErrorAction SilentlyContinue
+    # Set-OVEnclosure -Name Synergy-Encl-5 -Enclosure $Enc | Wait-OVTaskComplete
 
     Write-Output "All Enclosures Renamed" | Timestamp
 }

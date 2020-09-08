@@ -5,7 +5,7 @@ provider "oneview" {
   ov_password = "password"
   ov_endpoint = "https://192.168.56.101"
   ov_sslverify = false
-  ov_apiversion = 1600
+  ov_apiversion = 1800
   ov_ifmatch = "*"
 }
  

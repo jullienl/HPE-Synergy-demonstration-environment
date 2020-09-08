@@ -1,6 +1,6 @@
 {
     "ip": "192.168.56.101",
-    "api_version": 1600,
+    "api_version": 1800,
     "credentials": {
         "userName": "administrator",
         "authLoginDomain": "",
